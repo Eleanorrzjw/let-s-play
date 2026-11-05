@@ -380,6 +380,20 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;paddin
 .essay .say2 b{font-family:var(--f-system);font-weight:400;font-size:11px;color:#6d6876}
 .essay .say2 span{background:#e3f1ff;border-radius:14px 14px 14px 4px;padding:6px 12px;max-width:52ch}
 .essay .say2.me{align-items:flex-end}
+.essay .say2.visitor{align-items:flex-end}
+.essay .say2.visitor span{background:var(--yellow);color:#2b2a3a;border-radius:14px 14px 4px 14px}
+.visitor-chat{margin-top:34px;padding-top:20px;border-top:3px dashed #d9d2c0}
+.vc-log{min-height:20px;margin-bottom:14px}
+.vc-form{display:flex;flex-direction:column;gap:10px;background:#f3eee2;border-radius:14px;padding:14px}
+.vc-name{display:flex;align-items:center;gap:10px}
+.vc-name span{font-family:var(--f-system);font-size:11px;color:var(--wall)}
+.vc-form input{font:inherit;font-size:15px;border:2px solid #d9d2c0;border-radius:10px;padding:8px 12px;background:#fff;color:#2b2a3a;min-width:0}
+.vc-form input:focus{outline:none;border-color:var(--sky)}
+.vc-name input{flex:1;max-width:260px}
+.vc-row{display:flex;gap:8px}
+.vc-row input{flex:1}
+.vc-row button{font-family:var(--f-system);font-size:14px;background:var(--wall);color:#fff;border-radius:10px;padding:8px 16px}
+.vc-row button:active{transform:translateY(2px)}
 .essay .say2.me span{background:var(--wall);color:#fff;border-radius:14px 14px 4px 14px}
 .phone{height:94%;aspect-ratio:9/17;max-width:60vw;border:10px solid var(--paper);border-radius:34px;overflow:hidden;background:#000}
 .phone iframe{width:100%;height:100%;border:0;display:block}
@@ -668,6 +682,14 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;paddin
 <p>Wanna see some pictures?</p>
 <p>Hehe… Nice try!</p>
 <p>No pictures here. Go explore the link and find them yourself!</p>
+<section class="visitor-chat" aria-label="Talk to the community">
+  <p class="sys">&gt;SYSTEM: THE CHAT IS OPEN. YOUR TURN.&lt;</p>
+  <div class="vc-log" aria-live="polite"></div>
+  <form class="vc-form">
+    <label class="vc-name"><span>YOUR NAME</span><input name="who" maxlength="24" placeholder="e.g. Rainy Bus Stop" autocomplete="off"></label>
+    <div class="vc-row"><input name="msg" maxlength="240" placeholder="Say something to the community..." autocomplete="off" aria-label="Your message"><button type="submit">SEND</button></div>
+  </form>
+</section>
 </template>
 
 <script>
@@ -994,7 +1016,7 @@ function enter(){
 $('#yes').addEventListener('click',enter);
 document.addEventListener('keydown',e=>{
   if(state==='intro'&&(e.key==='y'||e.key==='Y'||e.key==='Enter')){ e.preventDefault(); enter(); }
-  if(state==='work'){ if(e.key==='Escape') closeWork(); if(e.key==='ArrowRight') stepPage(1); if(e.key==='ArrowLeft') stepPage(-1); }
+  if(state==='work'&&!/^(INPUT|TEXTAREA)$/.test(e.target.tagName)){ if(e.key==='Escape') closeWork(); if(e.key==='ArrowRight') stepPage(1); if(e.key==='ArrowLeft') stepPage(-1); }
 });
 
 /* Tornado Community: embedded when this runs on the exhibition computer (local file), QR code everywhere */
@@ -1004,6 +1026,33 @@ function playSlide(){
   const qr=`<div class="qrcard"><img src="img/qr-tornado.png" alt="QR code for Tornado Community"><b>SCAN TO PLAY<br>ON YOUR PHONE</b><small>blow on your phone,<br>let the wind take your line</small></div>`;
   if(CAN_EMBED) return `<div class="slide playwrap"><div class="phone"><iframe src="${TC_URL}" title="Tornado Community" allow="microphone; autoplay; accelerometer; gyroscope" loading="lazy"></iframe></div>${qr}</div>`;
   return `<div class="slide playwrap">${qr}</div>`;
+}
+/* visitor chat: messages stay on this computer, so the next visitor can read what earlier visitors left */
+const VC_KEY='tc-visitor-chat', VC_NAME='tc-visitor-name';
+const RES=[['Moss','Oh, a new voice. Welcome.'],['Pine Cone','Where is your line going?'],['Wind','I heard that. I hear everything.'],['Lake','Stay a little. Or don’t. Both are fine.'],['Tree','Mind my branches, but sit with us.'],['Little Tornado','WHEEE! Another friend!'],['Moss','Have you looked outside today?'],['Wind','Go open a window. I’ll be there.']];
+function vcLoad(){ try{ return JSON.parse(localStorage.getItem(VC_KEY)||'[]'); }catch(e){ return []; } }
+function vcSave(list){ try{ localStorage.setItem(VC_KEY,JSON.stringify(list.slice(-80))); }catch(e){} }
+function vcBubble(log,m){
+  const d=document.createElement('div'); d.className='say2 '+(m.res?'':'visitor');
+  const b=document.createElement('b'); b.textContent=m.who; const t=document.createElement('span'); t.textContent=m.text;
+  d.append(b,t); log.appendChild(d);
+}
+function wireChat(root){
+  const box=root.querySelector('.visitor-chat'); if(!box) return;
+  const log=box.querySelector('.vc-log'), f=box.querySelector('.vc-form'), who=f.who, msg=f.msg;
+  vcLoad().forEach(m=>vcBubble(log,m));
+  try{ who.value=localStorage.getItem(VC_NAME)||''; }catch(e){}
+  f.addEventListener('submit',e=>{
+    e.preventDefault();
+    const text=msg.value.trim(); if(!text) return;
+    const name=(who.value.trim()||'A visitor').slice(0,24);
+    try{ localStorage.setItem(VC_NAME,name); }catch(e){}
+    const list=vcLoad(); const m={who:name,text}; list.push(m); vcBubble(log,m); msg.value='';
+    tone(660,'square',.08,.05);
+    const r=pick(RES); const reply={who:r[0],text:r[1],res:1};
+    setTimeout(()=>{ vcBubble(log,reply); list.push(reply); vcSave(list); log.lastChild.scrollIntoView({block:'nearest',behavior:'smooth'}); tone(440,'triangle',.2,.05); },900);
+    vcSave(list); poke();
+  });
 }
 function essaySlide(){ return `<div class="slide"><article class="essay" tabindex="0" aria-label="About Tornado Community">${$('#tcEssay').innerHTML}</article></div>`; }
 function openWork(r){
@@ -1015,7 +1064,7 @@ function openWork(r){
   strip.innerHTML=r.pages.map(n=>`<div class="slide"><img src="img/p-${String(n).padStart(2,'0')}.jpg" alt="${r.name}, page ${n}"></div>`).join('')
     +(r.hub?playSlide()+essaySlide():'');
   strip.scrollLeft=0; count();
-  strip.querySelectorAll('.essay').forEach(a=>a.addEventListener('wheel',e=>e.stopPropagation(),{passive:true})); strip.querySelectorAll('img').forEach(im=>im.addEventListener('load',count,{once:true}));
+  strip.querySelectorAll('.essay').forEach(a=>{ a.addEventListener('wheel',e=>e.stopPropagation(),{passive:true}); wireChat(a); }); strip.querySelectorAll('img').forEach(im=>im.addEventListener('load',count,{once:true}));
   setTimeout(()=>{ work.classList.add('on'); work.setAttribute('aria-hidden','false'); $('#back').focus({preventScroll:true}); },reduce?0:420);
 }
 function closeWork(){ strip.innerHTML='';
