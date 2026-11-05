@@ -405,20 +405,28 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;paddin
   .fx{animation-duration:.4s}
 }
 
-/* frameless: only the screen and the controls stay, floating on the red wall */
+/* frameless: only the screen and the controls, on an aged-white wall */
+#map{background:#efe9dc!important}
+#map::before{content:"";position:absolute;inset:0;pointer-events:none;z-index:0;
+  background:
+    radial-gradient(ellipse at 50% 45%,rgba(255,255,255,.55) 0%,rgba(255,255,255,0) 60%),
+    radial-gradient(ellipse at 100% 100%,rgba(150,120,70,.22) 0%,rgba(150,120,70,0) 45%),
+    radial-gradient(ellipse at 0% 0%,rgba(150,120,70,.16) 0%,rgba(150,120,70,0) 40%),
+    repeating-linear-gradient(0deg,rgba(90,70,40,.035) 0 1px,transparent 1px 3px);
+  }
+#map::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:0;background-image:var(--noise);background-size:200px 200px;opacity:.16;mix-blend-mode:multiply}
 .cab{background:transparent!important;filter:none!important;padding:0!important;gap:16px!important}
 .cab::before,.cab::after,.ant,.cab .marq,.cab .stripes{display:none!important}
 .cabwrap{width:calc(100% - 170px)!important;margin-left:-70px!important;height:calc(100vh - 60px - env(safe-area-inset-top,0px) - env(safe-area-inset-bottom,0px))!important;margin-top:0!important}
-.bezel{filter:drop-shadow(3px 3px 0 var(--shade)) drop-shadow(3px 3px 0 var(--shade)) drop-shadow(3px 3px 0 var(--shade))}
+.bezel{filter:drop-shadow(3px 3px 0 #b9ab90) drop-shadow(3px 3px 0 #b9ab90) drop-shadow(3px 3px 0 #b9ab90)}
 .panel{padding:0 4px!important}
-.coin,.sbtn,.joy .arrows{color:var(--paper)!important}
-.coin .slot{background:var(--paper)!important;box-shadow:none!important}
-.coin .slot::after{background:var(--wall)!important;box-shadow:none!important}
-.grill i{background:rgba(255,255,255,.5)!important}
-.lcd,.drop,.joy .base{filter:drop-shadow(3px 3px 0 var(--shade)) drop-shadow(3px 3px 0 var(--shade))}
+.coin,.sbtn,.joy .arrows{color:var(--wall)!important}
+.lcd,.drop,.joy .base{filter:drop-shadow(3px 3px 0 #b9ab90) drop-shadow(3px 3px 0 #b9ab90)}
 .joy .knob{background:var(--yellow)!important;box-shadow:inset -5px -5px 0 #d4b000!important}
-.hay{display:none!important}
-.hopper{right:28px!important;bottom:40px!important}
+.hay{right:18px!important;top:14px!important;filter:drop-shadow(3px 3px 0 #b9ab90) drop-shadow(3px 3px 0 #b9ab90)!important}
+.hay span{background:#fffdf6!important;min-width:64px;font-size:clamp(26px,2.6vw,40px)!important;padding:14px 18px 16px!important}
+.hay::before{background:#fffdf6!important}
+.hopper{right:28px!important;bottom:40px!important;filter:drop-shadow(2px 2px 0 #b9ab90) drop-shadow(2px 2px 0 #b9ab90)!important}
 </style>
 
 <section id="intro" class="screen-fixed" aria-label="Entrance">
@@ -434,16 +442,16 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;paddin
 <section id="map" class="screen-fixed" aria-label="Maps of Past Explorations" hidden>
     <button class="hopper" id="hopper" type="button" aria-label="A little tornado jumping around">
     <svg viewBox="0 0 16 20" shape-rendering="crispEdges" aria-hidden="true">
-      <rect x="0" y="0" width="16" height="2" fill="#fff8d2"/><rect x="1" y="2" width="14" height="2" fill="#fff1a6"/>
-      <rect x="2" y="4" width="12" height="2" fill="#fff8d2"/><rect x="4" y="6" width="10" height="2" fill="#fff1a6"/>
-      <rect x="4" y="8" width="8" height="2" fill="#fff8d2"/><rect x="5" y="10" width="6" height="2" fill="#fff1a6"/>
-      <rect x="6" y="12" width="5" height="2" fill="#fff8d2"/><rect x="6" y="14" width="3" height="2" fill="#fff1a6"/>
-      <rect x="7" y="16" width="2" height="2" fill="#fff8d2"/><rect x="8" y="18" width="1" height="2" fill="#fff1a6"/>
-      <rect x="3" y="2" width="2" height="1" fill="#e8c840"/><rect x="11" y="6" width="2" height="1" fill="#e8c840"/><rect x="6" y="10" width="2" height="1" fill="#e8c840"/>
-      <rect x="5" y="4" width="1" height="1" fill="#17151c"/><rect x="9" y="4" width="1" height="1" fill="#17151c"/>
+      <rect x="0" y="0" width="16" height="2" fill="#2b2a3a"/><rect x="1" y="2" width="14" height="2" fill="#4a4766"/>
+      <rect x="2" y="4" width="12" height="2" fill="#2b2a3a"/><rect x="4" y="6" width="10" height="2" fill="#4a4766"/>
+      <rect x="4" y="8" width="8" height="2" fill="#2b2a3a"/><rect x="5" y="10" width="6" height="2" fill="#4a4766"/>
+      <rect x="6" y="12" width="5" height="2" fill="#2b2a3a"/><rect x="6" y="14" width="3" height="2" fill="#4a4766"/>
+      <rect x="7" y="16" width="2" height="2" fill="#2b2a3a"/><rect x="8" y="18" width="1" height="2" fill="#4a4766"/>
+      <rect x="3" y="2" width="2" height="1" fill="#8a86b0"/><rect x="11" y="6" width="2" height="1" fill="#8a86b0"/><rect x="6" y="10" width="2" height="1" fill="#8a86b0"/>
+      <rect x="5" y="4" width="1" height="1" fill="#ffe000"/><rect x="9" y="4" width="1" height="1" fill="#ffe000"/>
     </svg>
   </button>
-  <button class="hay" id="hay" type="button" aria-label="How are you?"><span>HOW ARE<br>YOU?</span></button>
+  <button class="hay" id="hay" type="button" aria-label="A question for you"><span>?</span></button>
   <div class="cabwrap">
     <span class="ant a1" aria-hidden="true"><i style="--h:30px;--r:-22deg;--c:var(--pink);--t:1.8s"></i><b></b></span>
     <span class="ant a2" aria-hidden="true"><i style="--h:22px;--r:14deg;--c:var(--neon);--t:2.3s"></i><b></b></span>
@@ -768,7 +776,7 @@ chbtn.addEventListener('click',e=>{ e.stopPropagation(); audioStart(); setChanne
 const hopper=$('#hopper');
 hopper.addEventListener('click',e=>{ e.stopPropagation(); audioStart(); hopper.classList.remove('big'); void hopper.offsetWidth; hopper.classList.add('big'); tone(500,'square',.4,.05,2.4); type('>BOING! BOING!<'); });
 hopper.addEventListener('animationend',e=>{ if(e.animationName==='bighop') hopper.classList.remove('big'); });
-const hay=$('#hay'), HAY=['HOW ARE<br>YOU?','HAVE SOME<br>TEA?','TAKE YOUR<br>TIME.','HOW ARE<br>YOU?'];
+const hay=$('#hay'), HAY=['?','HOW ARE<br>YOU?','HAVE SOME<br>TEA?','TAKE YOUR<br>TIME.'];
 let hayN=0; hay.addEventListener('click',e=>{ e.stopPropagation(); audioStart(); hayN=(hayN+1)%HAY.length; hay.querySelector('span').innerHTML=HAY[hayN]; tone(660,'square',.1,.05); setTimeout(()=>tone(880,'square',.1,.05),90); });
 
 /* ---------- pile physics ---------- */
