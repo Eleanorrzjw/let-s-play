@@ -368,6 +368,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;paddin
 .play{height:100%;aspect-ratio:16/9;max-width:92vw;display:grid;place-items:center;background:var(--wall);border:5px solid var(--paper);text-decoration:none;color:var(--paper);font-family:var(--f-system);text-align:center;font-size:clamp(18px,3vw,40px);line-height:1.3;padding:20px}
 .play small{display:block;font-family:var(--f-hand);font-size:.6em;color:var(--yellow)}
 .playwrap{gap:28px}
+.wvid{height:100%;max-height:100%;width:auto;max-width:92vw;display:block;border:5px solid var(--paper);background:#000}
 .essay{height:100%;width:min(780px,86vw);overflow-y:auto;box-sizing:border-box;background:#fffdf6;border-radius:18px;padding:28px clamp(18px,3vw,40px) 40px;color:#2b2a3a;font-family:var(--f-mono);font-size:clamp(13px,1vw,15px);line-height:1.65;scrollbar-width:thin}
 .essay p{margin:0 0 12px;max-width:66ch}
 .essay h3{font-family:var(--f-system);font-size:clamp(16px,1.5vw,22px);color:var(--wall);margin:30px 0 10px;letter-spacing:.02em}
@@ -440,7 +441,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;paddin
     radial-gradient(ellipse at 100% 100%,rgba(150,120,70,.2) 0%,rgba(150,120,70,0) 45%),
     radial-gradient(ellipse at 0% 0%,rgba(150,120,70,.14) 0%,rgba(150,120,70,0) 40%);
   }
-#map::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:0;background-image:var(--pixnoise);background-size:192px 192px;image-rendering:pixelated;opacity:.5;mix-blend-mode:multiply}
+#map::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:0;background-image:var(--pixnoise);background-size:128px 128px;image-rendering:pixelated;opacity:.42;mix-blend-mode:multiply}
 .cab{background:transparent!important;filter:none!important;padding:0!important;gap:16px!important}
 .cab::before,.cab::after,.ant,.cab .marq,.cab .stripes{display:none!important}
 .cabwrap{width:calc(100% - 170px)!important;margin-left:-70px!important;height:calc(100vh - 60px - env(safe-area-inset-top,0px) - env(safe-area-inset-bottom,0px))!important;margin-top:0!important}
@@ -693,7 +694,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;paddin
 
 <script>
 const R=[
- {id:'zero',name:'ZERO SPACE',img:'w-zero',ar:'1.15',pages:[1,2,3],pitch:392,color:'#6a4bff',
+ {id:'zero',name:'ZERO SPACE',video:'zero-video',img:'w-zero',ar:'1.15',pages:[1,2,3],pitch:392,color:'#6a4bff',
   poke:'Hm? Careful. I sway.',
   intro:"I'm ZERO SPACE. A notice board made of branches, stuck in the park grass. Leave me a memory. Or don't. The wind will."},
  {id:'follow',name:'FOLLOW "ME"',img:'w-follow',ar:'.75',pages:[23,24,25,26,27,28],pitch:466,color:'#e0a800',
@@ -1119,6 +1120,7 @@ function openWork(r){
   work.style.setProperty('--wc',r.color);
   $('#wtitle').textContent=r.name;
   strip.innerHTML=r.pages.map(n=>`<div class="slide"><img src="img/p-${String(n).padStart(2,'0')}.jpg" alt="${r.name}, page ${n}"></div>`).join('')
+    +(r.video?`<div class="slide"><video class="wvid" src="img/${r.video}.mp4" poster="img/${r.video}.jpg" controls loop playsinline preload="metadata"></video></div>`:'')
     +(r.hub?playSlide()+essaySlide():'');
   strip.scrollLeft=0; count();
   strip.querySelectorAll('.essay').forEach(a=>{ a.addEventListener('wheel',e=>e.stopPropagation(),{passive:true}); wireChat(a); }); strip.querySelectorAll('img').forEach(im=>im.addEventListener('load',count,{once:true}));
