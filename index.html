@@ -405,10 +405,18 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;paddin
   .fx{animation-duration:.4s}
 }
 
-/* simple white base: no sign, no antennas, no ears; just a clean white slab holding the screen and the controls */
-.cab{filter:drop-shadow(3px 3px 0 var(--shade)) drop-shadow(3px 3px 0 var(--shade)) drop-shadow(3px 3px 0 var(--shade)) drop-shadow(3px 3px 0 var(--shade))!important;border-radius:34px!important;padding:16px 18px 12px!important;gap:12px!important}
+/* frameless: only the screen and the controls stay, floating on the red wall */
+.cab{background:transparent!important;filter:none!important;padding:0!important;gap:16px!important}
 .cab::before,.cab::after,.ant,.cab .marq,.cab .stripes{display:none!important}
-.cabwrap{width:calc(100% - 170px)!important;margin-left:-70px!important;height:calc(100vh - 70px - env(safe-area-inset-top,0px) - env(safe-area-inset-bottom,0px))!important;margin-top:0!important}
+.cabwrap{width:calc(100% - 170px)!important;margin-left:-70px!important;height:calc(100vh - 60px - env(safe-area-inset-top,0px) - env(safe-area-inset-bottom,0px))!important;margin-top:0!important}
+.bezel{filter:drop-shadow(3px 3px 0 var(--shade)) drop-shadow(3px 3px 0 var(--shade)) drop-shadow(3px 3px 0 var(--shade))}
+.panel{padding:0 4px!important}
+.coin,.sbtn,.joy .arrows{color:var(--paper)!important}
+.coin .slot{background:var(--paper)!important;box-shadow:none!important}
+.coin .slot::after{background:var(--wall)!important;box-shadow:none!important}
+.grill i{background:rgba(255,255,255,.5)!important}
+.lcd,.drop,.joy .base{filter:drop-shadow(3px 3px 0 var(--shade)) drop-shadow(3px 3px 0 var(--shade))}
+.joy .knob{background:var(--yellow)!important;box-shadow:inset -5px -5px 0 #d4b000!important}
 .hay{display:none!important}
 .hopper{right:28px!important;bottom:40px!important}
 </style>
