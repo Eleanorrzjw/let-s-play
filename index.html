@@ -433,27 +433,27 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;paddin
 }
 
 /* frameless: only the screen and the controls, on an aged-white wall */
-#map{background:#efe9dc!important}
+#map{background:#141318!important}
 #map::before{content:"";position:absolute;inset:0;pointer-events:none;z-index:0;
   background:
-    radial-gradient(ellipse at 50% 45%,rgba(255,255,255,.55) 0%,rgba(255,255,255,0) 60%),
-    radial-gradient(ellipse at 100% 100%,rgba(150,120,70,.22) 0%,rgba(150,120,70,0) 45%),
-    radial-gradient(ellipse at 0% 0%,rgba(150,120,70,.16) 0%,rgba(150,120,70,0) 40%),
-    repeating-linear-gradient(0deg,rgba(90,70,40,.025) 0 1px,transparent 1px 2px);
+    radial-gradient(ellipse at 50% 45%,rgba(255,255,255,.05) 0%,rgba(255,255,255,0) 60%),
+    radial-gradient(ellipse at 100% 100%,rgba(0,0,0,.45) 0%,rgba(0,0,0,0) 45%),
+    radial-gradient(ellipse at 0% 0%,rgba(0,0,0,.35) 0%,rgba(0,0,0,0) 40%),
+    repeating-linear-gradient(0deg,rgba(255,255,255,.018) 0 1px,transparent 1px 2px);
   }
-#map::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:0;background-image:var(--noise);background-size:64px 64px;opacity:.13;mix-blend-mode:multiply}
+#map::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:0;background-image:var(--noise);background-size:64px 64px;opacity:.09;mix-blend-mode:screen}
 .cab{background:transparent!important;filter:none!important;padding:0!important;gap:16px!important}
 .cab::before,.cab::after,.ant,.cab .marq,.cab .stripes{display:none!important}
 .cabwrap{width:calc(100% - 170px)!important;margin-left:-70px!important;height:calc(100vh - 60px - env(safe-area-inset-top,0px) - env(safe-area-inset-bottom,0px))!important;margin-top:0!important}
-.bezel{filter:drop-shadow(3px 3px 0 #b9ab90) drop-shadow(3px 3px 0 #b9ab90) drop-shadow(3px 3px 0 #b9ab90)}
+.bezel{filter:drop-shadow(3px 3px 0 var(--shade)) drop-shadow(3px 3px 0 var(--shade)) drop-shadow(3px 3px 0 var(--shade))}
 .panel{padding:0 4px!important}
 .coin,.sbtn,.joy .arrows{color:var(--wall)!important}
-.lcd,.drop,.joy .base{filter:drop-shadow(3px 3px 0 #b9ab90) drop-shadow(3px 3px 0 #b9ab90)}
+.lcd,.drop,.joy .base{filter:drop-shadow(3px 3px 0 var(--shade)) drop-shadow(3px 3px 0 var(--shade))}
 .joy .knob{background:var(--yellow)!important;box-shadow:inset -5px -5px 0 #d4b000!important}
-.hay{right:18px!important;top:14px!important;filter:drop-shadow(3px 3px 0 #b9ab90) drop-shadow(3px 3px 0 #b9ab90)!important}
+.hay{right:18px!important;top:14px!important;filter:drop-shadow(3px 3px 0 var(--shade)) drop-shadow(3px 3px 0 var(--shade))!important}
 .hay span{background:#fffdf6!important;min-width:64px;font-size:clamp(26px,2.6vw,40px)!important;padding:14px 18px 16px!important}
 .hay::before{background:#fffdf6!important}
-.hopper{right:28px!important;bottom:40px!important;filter:drop-shadow(2px 2px 0 #b9ab90) drop-shadow(2px 2px 0 #b9ab90)!important}
+.hopper{right:28px!important;bottom:40px!important;filter:drop-shadow(1.5px 0 0 #8a86b0) drop-shadow(-1.5px 0 0 #8a86b0) drop-shadow(0 -1.5px 0 #8a86b0) drop-shadow(2px 2px 0 var(--shade)) drop-shadow(2px 2px 0 var(--shade))!important}
 </style>
 
 <section id="intro" class="screen-fixed" aria-label="Entrance">
