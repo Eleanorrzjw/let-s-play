@@ -445,10 +445,16 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;paddin
 .cab{background:transparent!important;filter:none!important;padding:0!important;gap:16px!important}
 .cab::before,.cab::after,.ant,.cab .marq,.cab .stripes{display:none!important}
 .cabwrap{width:calc(100% - 170px)!important;margin-left:-70px!important;height:calc(100vh - 60px - env(safe-area-inset-top,0px) - env(safe-area-inset-bottom,0px))!important;margin-top:0!important}
-.bezel{filter:none;box-shadow:0 0 0 8px var(--wall),0 0 0 11px #8f0a0e}
-/* sunken look: the machine is set into the wall, so the red shadow falls inward from the top-left */
-.screen::after{content:"";position:absolute;inset:0;z-index:12;pointer-events:none;border-radius:inherit;
-  box-shadow:inset 4px 4px 0 rgba(176,10,16,.85),inset 8px 8px 0 rgba(176,10,16,.55),inset 12px 12px 0 rgba(176,10,16,.3),inset -3px -3px 0 rgba(255,255,255,.25)}
+.bezel{filter:none;
+  /* the blue frame is set into the white machine: a cut edge in the white, red shadow falling inward from the top-left, light catching the bottom-right lip */
+  box-shadow:
+    0 0 0 3px #cbbfa4,
+    -3px -3px 0 3px #b8ab8d,
+    3px 3px 0 3px #fffaf0,
+    inset 4px 4px 0 rgba(176,10,16,.9),
+    inset 8px 8px 0 rgba(176,10,16,.6),
+    inset 12px 12px 0 rgba(176,10,16,.32),
+    inset -3px -3px 0 rgba(255,255,255,.35)}
 .panel{padding:0 4px!important}
 .coin,.sbtn,.joy .arrows{color:var(--wall)!important}
 .lcd,.drop,.joy .base{filter:drop-shadow(3px 3px 0 #b9ab90) drop-shadow(3px 3px 0 #b9ab90)}
