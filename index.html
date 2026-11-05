@@ -368,6 +368,19 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;paddin
 .play{height:100%;aspect-ratio:16/9;max-width:92vw;display:grid;place-items:center;background:var(--wall);border:5px solid var(--paper);text-decoration:none;color:var(--paper);font-family:var(--f-system);text-align:center;font-size:clamp(18px,3vw,40px);line-height:1.3;padding:20px}
 .play small{display:block;font-family:var(--f-hand);font-size:.6em;color:var(--yellow)}
 .playwrap{gap:28px}
+.essay{height:100%;width:min(780px,86vw);overflow-y:auto;box-sizing:border-box;background:#fffdf6;border-radius:18px;padding:28px clamp(18px,3vw,40px) 40px;color:#2b2a3a;font-family:var(--f-mono);font-size:clamp(13px,1vw,15px);line-height:1.65;scrollbar-width:thin}
+.essay p{margin:0 0 12px;max-width:66ch}
+.essay h3{font-family:var(--f-system);font-size:clamp(16px,1.5vw,22px);color:var(--wall);margin:30px 0 10px;letter-spacing:.02em}
+.essay .yy{font-family:var(--f-system);color:var(--wall);font-size:16px}
+.essay .livechat{display:inline-block;font-family:var(--f-system);background:var(--sky);color:#fff;padding:4px 10px;margin:8px 0 14px}
+.essay .sys{font-family:var(--f-system);font-size:12px;color:#14c23c;background:#1f1c2c;display:inline-block;padding:3px 9px;margin:6px 0 12px}
+.essay .mission{font-family:var(--f-system);font-size:13px;color:#fff;background:var(--wall);display:inline-block;padding:3px 10px;margin:0 0 12px}
+.essay blockquote{margin:16px 0;padding:10px 16px;border-left:6px solid var(--yellow);background:#fff6c2;font-family:var(--f-hand);font-weight:700;font-size:clamp(18px,1.6vw,24px);color:var(--wall);max-width:60ch}
+.essay .say2{display:flex;flex-direction:column;align-items:flex-start;gap:2px;margin:0 0 10px}
+.essay .say2 b{font-family:var(--f-system);font-weight:400;font-size:11px;color:#6d6876}
+.essay .say2 span{background:#e3f1ff;border-radius:14px 14px 14px 4px;padding:6px 12px;max-width:52ch}
+.essay .say2.me{align-items:flex-end}
+.essay .say2.me span{background:var(--wall);color:#fff;border-radius:14px 14px 4px 14px}
 .phone{height:94%;aspect-ratio:9/17;max-width:60vw;border:10px solid var(--paper);border-radius:34px;overflow:hidden;background:#000}
 .phone iframe{width:100%;height:100%;border:0;display:block}
 .qrcard{display:flex;flex-direction:column;align-items:center;gap:12px;background:var(--paper);padding:18px 18px 20px;border-radius:18px;text-align:center}
@@ -585,6 +598,77 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;paddin
   <div id="strip" tabindex="0"></div>
 </section>
 <div class="flash" id="flash"></div>
+<template id="tcEssay">
+<p>Hey! Hear that? Beings are talking.</p>
+<p>Wanna eavesdrop?</p>
+<p class="yy">[Y] / [ALSO Y]</p>
+<p class="livechat">[ TORNADO COMMUNITY: LIVE CHAT ]</p>
+<div class="say2 "><b>Moss</b><span>Hey, who’s new here?</span></div>
+<div class="say2 "><b>Pine Cone</b><span>Does anyone know where all these lines are going?</span></div>
+<div class="say2 "><b>Little Tornado</b><span>No idea! That’s the fun part!</span></div>
+<div class="say2 "><b>Wind</b><span>Did someone call me?</span></div>
+<div class="say2 "><b>Lake</b><span>You always show up without warning.</span></div>
+<div class="say2 "><b>Wind</b><span>And yet, you would be quite different without me.</span></div>
+<div class="say2 "><b>Tree</b><span>Sorry…Has anyone seen my branches?</span></div>
+<p class="sys">&gt;SYSTEM: RESIDENTS ARE HAVING THEIR OWN CONVERSATIONS…&lt;</p>
+<p class="sys">&gt;SYSTEM: COMMUNITY IS STILL EVOLVING.&lt;</p>
+<div class="say2 "><b>Moss</b><span>Wait, are we forgetting something?</span></div>
+<div class="say2 "><b>Pine Cone</b><span>What?</span></div>
+<div class="say2 "><b>Moss</b><span>We have a visitor!</span></div>
+<div class="say2 me"><b>Tornado Zhang</b><span>Oh! Welcome! Don’t be shy. You can touch things here!</span></div>
+<div class="say2 "><b>Lake</b><span>Just don’t expect everything to stay where you left it.</span></div>
+<p class="sys">&gt;SYSTEM: A NEW CONVERSATION HAS STARTED…&lt;</p>
+<h3>SO, WHAT IS THIS PLACE?</h3>
+<p>Well, welcome to Tornado Community!</p>
+<p>Tornado Community is a conversation between my project and Tim Ingold’s 2008 essay, “Bindings against Boundaries: Entanglements of Life in an Open World.” It is also a response full of contradictions: a phone app that wants you to put your phone down. I borrowed the form of a video game, using loud colours, exaggerated visuals, and playful interactions to draw people in. But I don’t want them to stay on the screen. I want to bring them back to where they are, so they can notice the real weather, the wind, and the life around them.</p>
+<p class="sys">&gt;SYSTEM: NEW MISSION UNLOCKED.&lt;</p>
+<p class="mission">[MISSION 01: EXPLORE THE COMMUNITY]</p>
+<p>In Tornado Community, everything is material, including people. Users draw a line that represents how today’s weather feels to them, then blow on their phones to let the wind scatter it. The particles become part of a web woven from everyone’s lines. Moss, lakes, pine cones, or people who have visited before may respond. Text, plants, the little tornado, and even the knots in the web can be touched. Each has its own personality and way of responding.</p>
+<p>Users can choose to stay or leave. Those who stay can write back to the resident who responded to them. Those who leave see a slightly grumpy BYE. But even those who stay will eventually be sent outside the screen. All the sounds slowly disappear, the screen turns black, and a message appears: “It’s outside.” When they return, the app asks: “You’re back. What did you find out there?” I want this to be a temporary space where people can meet, exchange a little of themselves, and then return to their own lives.</p>
+<h3>HOW DID THIS WORLD COME ABOUT?</h3>
+<p class="sys">&gt;SYSTEM: LOADING PREVIOUS THOUGHTS…&lt;</p>
+<p>I have read many articles about boundaries, and each reading has taken the project in a new direction. At first, I understood boundaries as something that moves within a state of dynamic balance. Later, I thought of a rainbow: blurred and contradictory, seemingly within reach, but impossible to reach.</p>
+<p>Then came the wind.</p>
+<p>In Zero Space, I added a branch to a sign planted in the grass of a park. It began to sway, and the wind became part of what shaped it. Later, I hung a pen from a branch and let the wind draw on a sheet of paper. It left only two tiny dots. The world does not unfold according to my plans. Materials and the environment take part in shaping what happens, too.</p>
+<div class="say2 "><b>Wind</b><span>Hey, don’t forget I was there.</span></div>
+<div class="say2 "><b>Tree</b><span>You were making quite a mess, actually.</span></div>
+<div class="say2 "><b>Wind</b><span>That’s one way to put it.</span></div>
+<p>Later, I read Ingold’s discussion of materials responding to one another. I first imagined a closed system in which people, water, trees, fire, and other beings exchange and influence one another. I also imagined something like a “social media platform of the future.” I asked myself: Will phones still exist in the future? Perhaps what remains will simply be the connections between people. But why do I think these things can only happen in the future? Our ability to sense the world has always been there. Sometimes we simply forget to use it. Moss growing on a wall, wind brushing against our faces, strangers standing together in the rain at the same bus stop: these relationships and responses already exist.</p>
+<p>Tornado Community is already happening in everyday life. I don’t need to create a future world. I only need to make an in-between space: a reminder, an invitation.</p>
+<p class="sys">&gt;SYSTEM: A NEW PATH HAS APPEARED.&lt;</p>
+<h3>A CONVERSATION WITH INGOLD</h3>
+<p class="mission">[Mission 02: Follow the lines.]</p>
+<p>Ingold argues that life is not made up of separate objects with fixed boundaries that connect to form a network. Instead, life is made of lines that extend, cross, and weave into one another. Different beings move along their own paths and meet in an open world, forming what he calls a meshwork.</p>
+<p>At the beginning of his essay, he uses a drawing experiment to explore the relationship between lines and boundaries. A line is a trace of movement, yet we often see it as a boundary enclosing a space. This made me think of the weather lines in Tornado Community. I invite users to draw a line that represents how they feel, then let the wind scatter it into the lines left by others.</p>
+<p>Ingold also reminds us that weather is not just the background against which life happens. Wind itself shapes the relationships between materials and living beings. So I made real wind and human breath part of the project. Wind is no longer just a visual effect; it becomes a force that helps the work happen.</p>
+<div class="say2 "><b>Wind</b><span>So, I’m not just a background effect anymore?</span></div>
+<div class="say2 me"><b>Tornado Zhang</b><span>Nope. You’re part of the system now.</span></div>
+<p>The lines in the web connect through knots and tension. They tighten, loosen, break, and form new connections. I also chose a little tornado as the guide for the project because it is not a fixed object, but a moving mass of air.</p>
+<p>For Ingold, existence unfolds along paths, while places are temporary stopping points along the way. I hope Tornado Community can become such a place: somewhere people briefly enter, connect with other beings, and then continue on their own paths.</p>
+<p class="sys">&gt;SYSTEM: A CONTRADICTION HAS ENTERED THE COMMUNITY.&lt;</p>
+<p>But Tornado Community is also a contradictory response to Ingold. He criticises how modern people become trapped inside buildings and indoor spaces, gradually separated from their surroundings. A phone is just such an enclosed space. But I don’t avoid it. I choose to start there because so many people already live through their screens.</p>
+<p>I use bright red and blue backgrounds, exaggerated jagged shapes, hand-drawn text, and natural sounds to make the screen feel alive. Everything has its own personality. Text jumps around, residents respond, and even the knots in the web make sounds when touched. I want this noise to help people feel the energy of the life around them. At the same time, I want to use it to “make some noise and drive people out,” encouraging them to leave the screen and return to the real world. When all the sounds suddenly disappear and the screen fades into darkness, the silence becomes more noticeable. Rather than responding to Ingold with a completely open space, I start with the very medium he might be cautious about. I use something familiar to draw people in, then use that same medium to send them back outside.</p>
+<blockquote>“Where the app ends, the world begins.”</blockquote>
+<p>I have also started to rethink boundaries. Do they have to be clear dividing lines? Could they be more like rainbows: shifting spaces where different things meet, impossible to fully possess? When users leave the app, the boundary between the phone and the real world becomes more than an abstract idea. It becomes something they can experience. They only need to look up to cross it.</p>
+<p class="sys">&gt;SYSTEM: TWO MOVEMENTS DETECTED.&lt;</p>
+<p>I gradually realised that the project has two movements in opposite directions. Inside the app, lines enter and weave together, forming new connections. This is an inward movement, in which different experiences influence one another and create new relationships. But when the app ends, the direction reverses. Users leave the screen and return to their surroundings, where they can experience the real weather, wind, plants, and other forms of life. This is an outward movement, a release.</p>
+<blockquote>“One movement weaves inward; the other releases outward.”</blockquote>
+<p>The tension between these two movements is at the heart of the project. I don’t want to put the world inside a phone. I want to temporarily turn the phone into a place that points back to the world.</p>
+<h3>QUESTIONS I HAVE NOT YET RESOLVED</h3>
+<p class="mission">[Mission 03: Something is still missing…]</p>
+<p>Ingold draws a distinction between meshwork and network. A network is usually made of clearly defined nodes and connections, while a meshwork focuses more on life moving and weaving along its paths. But my web still has clear nodes, and its structure is still shaped by rules I have designed in advance. I keep asking myself: How can relationships form through continuous movement and entanglement, rather than depending on predefined nodes? I want to create an open, dynamic, and unpredictable ecosystem, yet I have designed rules for its sounds, actions, relationships, and responses.</p>
+<blockquote>“Am I creating an open ecosystem, or a world that looks open but is actually arranged by me?”</blockquote>
+<p>I don’t have an answer yet, but I want to keep this question with me as I continue designing. Perhaps design is not about deciding in advance what a system will become. It is about creating conditions in which different beings can meet, respond to one another, and change each other. At the same time, I need to observe what these conditions bring about and take responsibility for their effects.</p>
+<p>For now, Tornado Community is not an answer to what a future community should look like. It is an experiment: to see what might happen when I stop trying to arrange every outcome.</p>
+<div class="say2 "><b>Moss</b><span>So… are we done?</span></div>
+<div class="say2 "><b>Pine Cone</b><span>I don’t think so. The community is still evolving.</span></div>
+<div class="say2 "><b>Wind</b><span>And I’m not going anywhere.</span></div>
+<div class="say2 me"><b>Tornado Zhang</b><span>Well, I guess that’s where you come in.</span></div>
+<p class="sys">&gt;SYSTEM: EXPLORATION PAUSED. THE WORLD OUTSIDE IS WAITING.&lt;</p>
+<p>Wanna see some pictures?</p>
+<p>Hehe… Nice try!</p>
+<p>No pictures here. Go explore the link and find them yourself!</p>
+</template>
 
 <script>
 const R=[
@@ -921,6 +1005,7 @@ function playSlide(){
   if(CAN_EMBED) return `<div class="slide playwrap"><div class="phone"><iframe src="${TC_URL}" title="Tornado Community" allow="microphone; autoplay; accelerometer; gyroscope" loading="lazy"></iframe></div>${qr}</div>`;
   return `<div class="slide playwrap">${qr}</div>`;
 }
+function essaySlide(){ return `<div class="slide"><article class="essay" tabindex="0" aria-label="About Tornado Community">${$('#tcEssay').innerHTML}</article></div>`; }
 function openWork(r){
   state='work';
   const fl=$('#flash'); fl.textContent=`>ENTERING ${r.name}...<`; fl.style.background=r.color;
@@ -928,8 +1013,9 @@ function openWork(r){
   work.style.setProperty('--wc',r.color);
   $('#wtitle').textContent=r.name;
   strip.innerHTML=r.pages.map(n=>`<div class="slide"><img src="img/p-${String(n).padStart(2,'0')}.jpg" alt="${r.name}, page ${n}"></div>`).join('')
-    +(r.hub?playSlide():'');
-  strip.scrollLeft=0; count(); strip.querySelectorAll('img').forEach(im=>im.addEventListener('load',count,{once:true}));
+    +(r.hub?playSlide()+essaySlide():'');
+  strip.scrollLeft=0; count();
+  strip.querySelectorAll('.essay').forEach(a=>a.addEventListener('wheel',e=>e.stopPropagation(),{passive:true})); strip.querySelectorAll('img').forEach(im=>im.addEventListener('load',count,{once:true}));
   setTimeout(()=>{ work.classList.add('on'); work.setAttribute('aria-hidden','false'); $('#back').focus({preventScroll:true}); },reduce?0:420);
 }
 function closeWork(){ strip.innerHTML='';
