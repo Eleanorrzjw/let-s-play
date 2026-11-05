@@ -1030,6 +1030,58 @@ function playSlide(){
 /* visitor chat: messages stay on this computer, so the next visitor can read what earlier visitors left */
 const VC_KEY='tc-visitor-chat', VC_NAME='tc-visitor-name';
 const RES=[['Moss','Oh, a new voice. Welcome.'],['Pine Cone','Where is your line going?'],['Wind','I heard that. I hear everything.'],['Lake','Stay a little. Or don’t. Both are fine.'],['Tree','Mind my branches, but sit with us.'],['Little Tornado','WHEEE! Another friend!'],['Moss','Have you looked outside today?'],['Wind','Go open a window. I’ll be there.']];
+/* residents answer what was actually said: each one listens for its own topics, and picks up the visitor's words */
+const TOPICS=[
+ {who:'Moss', en:/\b(sad|lonely|alone|anxious|anxiety|stress|stressed|scared|bad|hard|hurt|miss|tired|exhausted)\b/i, zh:/难过|孤单|孤独|焦虑|压力|害怕|不好|难|痛|想念|累/,
+  say:['That sounds heavy. You don’t have to carry {w} alone here.','I’m small, but I’m here. Breathe out slowly, Wind will take a bit of the {w} with it.','Thank you for saying it. Saying {w} out loud is a kind of weather too.'],
+  zsay:['听起来很重。在这里你不用一个人扛着{w}。','我很小，但我在。慢慢呼一口气，风会带走一点{w}。']},
+ {who:'Wind', en:/\b(wind|windy|breeze|blow|blowing|air|breath|breathe|storm|tornado)\b/i, zh:/风|吹|呼吸|空气|龙卷/,
+  say:['You mentioned {w}. I was just passing by your window, did you feel me?','{w}? That’s my department. Go outside and I’ll show you.','Ha, people only talk about me when they need me. Thanks for the {w}.'],
+  zsay:['你说到{w}？我刚刚就从你窗边吹过，你感觉到了吗？','{w}是我的事。出去走走，我带你看。']},
+ {who:'Lake', en:/\b(rain|raining|water|lake|sea|ocean|river|wet|swim|cry|crying|tears?)\b/i, zh:/雨|水|湖|海|河|哭|眼泪|游泳/,
+  say:['{w}... I keep everything that falls into me. You can leave that here too.','When you say {w}, I ripple a little. Thank you.','Everything ends up in water eventually. Even {w}.'],
+  zsay:['{w}……落进我这里的东西我都会收着，你也可以放一点在这儿。','你说{w}的时候，我泛起了一点涟漪。']},
+ {who:'Tree', en:/\b(tree|trees|leaf|leaves|branch|branches|shade|forest|park|grow|growing|root|roots)\b/i, zh:/树|叶|枝|森林|公园|长大|生长|根|树荫/,
+  say:['{w}? You are speaking my language. Slow down, growing takes a while.','I lost a branch last week. Talking about {w} makes me feel better.','Sit under me for a minute. We can think about {w} together.'],
+  zsay:['{w}？你在说我的语言。慢一点，长大要花时间的。','来我下面坐一会儿，我们一起想想{w}。']},
+ {who:'Moss', en:/\b(slow|slowly|quiet|small|tiny|wall|stone|green|soft|rest|sleep|sleepy)\b/i, zh:/慢|安静|小|墙|石头|绿|软|休息|困|睡/,
+  say:['{w}. I like that word. I have been {w} on this wall for years.','Most people step on me without noticing. You noticed {w}. That counts.','If you are {w}, stay low with me for a bit.'],
+  zsay:['{w}，我喜欢这个词。我在这面墙上{w}了好多年。','如果你觉得{w}，就跟我一起低一点，待一会儿。']},
+ {who:'Pine Cone', en:/\b(why|how|what|where|who|when|line|lines|map|lost|question|future)\b|\?/i, zh:/为什么|怎么|什么|哪里|谁|线|地图|迷路|未来|？|\?/,
+  say:['Good question. I fell off a tree asking the same thing.','I don’t know either. But asking out loud is already a line drawn somewhere.','Let’s keep that question in the web and see who answers it.'],
+  zsay:['好问题。我就是想着同样的问题从树上掉下来的。','我也不知道。但你问出来，就已经在网里画了一条线。']},
+ {who:'Little Tornado', en:/\b(fun|play|game|happy|yay|wow|love|excited|haha|lol|cool|amazing)\b|!{1,}/i, zh:/好玩|玩|游戏|开心|喜欢|爱|哈哈|太棒|酷|！|!/,
+  say:['YES! {w}! Spin with me!','You said {w} and now I can’t stop spinning. Your fault.','More {w}! The web is shaking, in a good way!'],
+  zsay:['耶！{w}！跟我一起转！','你说了{w}，我现在停不下来了，都怪你！']},
+ {who:'Tornado Zhang', en:/\b(eleanor|jingwen|zhang|you|design|designer|project|art|why did you)\b/i, zh:/你|设计|作品|项目|艺术|张/,
+  say:['Thank you for leaving that here. It becomes part of the community now.','I made this place hoping someone would say something like that.','I’m still figuring it out too. Tell me what you see from where you are.'],
+  zsay:['谢谢你把这句话留在这里，它现在也是社区的一部分了。','我做这个地方，就是希望有人会说这样的话。']},
+ {who:'Lake', en:/\b(tea|drink|coffee|cup|warm|cold|hot)\b/i, zh:/茶|喝|咖啡|杯|暖|冷|热/,
+  say:['{w}? There’s real tea on the table next to you. Have some, it’s still warm.','I’m mostly water, so {w} feels like family.'],
+  zsay:['{w}？你旁边桌上就有真的茶，喝一点吧，还是热的。','我大部分是水，{w}对我来说就像家人。']},
+ {who:'Wind', en:/\b(phone|screen|outside|out|leave|bye|goodbye|go)\b/i, zh:/手机|屏幕|外面|出去|离开|再见|拜拜|走/,
+  say:['{w}... yes. The best part of this place is the moment you look up from it.','Before you go, open a door. I’ll be waiting.'],
+  zsay:['{w}……对，这里最好的部分，就是你抬头离开它的那一刻。','走之前开一扇门吧，我在外面等你。']},
+ {who:'Pine Cone', en:/\b(hi|hello|hey|yo|morning|evening)\b/i, zh:/你好|嗨|哈喽|早上好|晚上好/,
+  say:['Hello, {n}! A new line just entered the web.','Hey {n}. Moss saw you first, but I said hi first.'],
+  zsay:['你好，{n}！网里刚刚多了一条新的线。','嗨，{n}。苔藓先看到你的，但我先打的招呼。']},
+];
+const FALLBACK_EN=[['Moss','"{q}"... I’ll think about that for a few seasons.'],['Lake','I’m holding on to "{q}". It looks nice on the surface.'],['Tree','"{q}". Hm. Say a bit more?'],['Wind','I’ll carry "{q}" to the next visitor.']];
+const FALLBACK_ZH=[['苔藓','「{q}」……我要想上好几个季节。'],['湖','我把「{q}」收在水面上了，看起来很好看。'],['树','「{q}」。嗯，可以再多说一点吗？'],['风','我会把「{q}」带给下一个来的人。']];
+const ZH_NAME={'Wind':'风','Lake':'湖','Tree':'树','Moss':'苔藓','Pine Cone':'松果','Little Tornado':'小龙卷风','Tornado Zhang':'Tornado Zhang'};
+function respond(text,name){
+  const zh=/[一-鿿]/.test(text), out=[], used=new Set();
+  const short=text.length>36?text.slice(0,34)+'…':text;
+  for(const t of TOPICS){
+    const m=text.match(zh?t.zh:t.en); if(!m||used.has(t.who)) continue;
+    let w=(m[1]||m[0]).trim(); if(!/[\p{L}]/u.test(w)) w=zh?'这个':'that';
+    const line=pick(zh?t.zsay:t.say).replace(/\{w\}/g,w).replace(/\{n\}/g,name);
+    out.push([zh?ZH_NAME[t.who]:t.who,line.charAt(0).toUpperCase()+line.slice(1)]); used.add(t.who);
+    if(out.length>=2) break;
+  }
+  if(!out.length){ const f=pick(zh?FALLBACK_ZH:FALLBACK_EN); out.push([f[0],f[1].replace('{q}',short)]); }
+  return out;
+}
 function vcLoad(){ try{ return JSON.parse(localStorage.getItem(VC_KEY)||'[]'); }catch(e){ return []; } }
 function vcSave(list){ try{ localStorage.setItem(VC_KEY,JSON.stringify(list.slice(-80))); }catch(e){} }
 function vcBubble(log,m){
@@ -1049,8 +1101,8 @@ function wireChat(root){
     try{ localStorage.setItem(VC_NAME,name); }catch(e){}
     const list=vcLoad(); const m={who:name,text}; list.push(m); vcBubble(log,m); msg.value='';
     tone(660,'square',.08,.05);
-    const r=pick(RES); const reply={who:r[0],text:r[1],res:1};
-    setTimeout(()=>{ vcBubble(log,reply); list.push(reply); vcSave(list); log.lastChild.scrollIntoView({block:'nearest',behavior:'smooth'}); tone(440,'triangle',.2,.05); },900);
+    const replies=respond(text,name);
+    replies.forEach((r,k)=>setTimeout(()=>{ const reply={who:r[0],text:r[1],res:1}; vcBubble(log,reply); list.push(reply); vcSave(list); log.lastChild.scrollIntoView({block:'nearest',behavior:'smooth'}); tone(440+k*110,'triangle',.2,.05); },900+k*1300));
     vcSave(list); poke();
   });
 }
