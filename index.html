@@ -433,27 +433,26 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;paddin
 }
 
 /* frameless: only the screen and the controls, on an aged-white wall */
-#map{background:#141318!important}
+#map{background:#efe9dc!important}
 #map::before{content:"";position:absolute;inset:0;pointer-events:none;z-index:0;
   background:
-    radial-gradient(ellipse at 50% 45%,rgba(255,255,255,.05) 0%,rgba(255,255,255,0) 60%),
-    radial-gradient(ellipse at 100% 100%,rgba(0,0,0,.45) 0%,rgba(0,0,0,0) 45%),
-    radial-gradient(ellipse at 0% 0%,rgba(0,0,0,.35) 0%,rgba(0,0,0,0) 40%),
-    repeating-linear-gradient(0deg,rgba(255,255,255,.018) 0 1px,transparent 1px 2px);
+    radial-gradient(ellipse at 50% 45%,rgba(255,255,255,.5) 0%,rgba(255,255,255,0) 60%),
+    radial-gradient(ellipse at 100% 100%,rgba(150,120,70,.2) 0%,rgba(150,120,70,0) 45%),
+    radial-gradient(ellipse at 0% 0%,rgba(150,120,70,.14) 0%,rgba(150,120,70,0) 40%);
   }
-#map::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:0;background-image:var(--noise);background-size:64px 64px;opacity:.09;mix-blend-mode:screen}
+#map::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:0;background-image:var(--pixnoise);background-size:192px 192px;image-rendering:pixelated;opacity:.5;mix-blend-mode:multiply}
 .cab{background:transparent!important;filter:none!important;padding:0!important;gap:16px!important}
 .cab::before,.cab::after,.ant,.cab .marq,.cab .stripes{display:none!important}
 .cabwrap{width:calc(100% - 170px)!important;margin-left:-70px!important;height:calc(100vh - 60px - env(safe-area-inset-top,0px) - env(safe-area-inset-bottom,0px))!important;margin-top:0!important}
-.bezel{filter:drop-shadow(3px 3px 0 var(--shade)) drop-shadow(3px 3px 0 var(--shade)) drop-shadow(3px 3px 0 var(--shade))}
+.bezel{filter:drop-shadow(3px 3px 0 #b9ab90) drop-shadow(3px 3px 0 #b9ab90) drop-shadow(3px 3px 0 #b9ab90)}
 .panel{padding:0 4px!important}
 .coin,.sbtn,.joy .arrows{color:var(--wall)!important}
-.lcd,.drop,.joy .base{filter:drop-shadow(3px 3px 0 var(--shade)) drop-shadow(3px 3px 0 var(--shade))}
+.lcd,.drop,.joy .base{filter:drop-shadow(3px 3px 0 #b9ab90) drop-shadow(3px 3px 0 #b9ab90)}
 .joy .knob{background:var(--yellow)!important;box-shadow:inset -5px -5px 0 #d4b000!important}
-.hay{right:18px!important;top:14px!important;filter:drop-shadow(3px 3px 0 var(--shade)) drop-shadow(3px 3px 0 var(--shade))!important}
+.hay{right:18px!important;top:14px!important;filter:drop-shadow(3px 3px 0 #b9ab90) drop-shadow(3px 3px 0 #b9ab90)!important}
 .hay span{background:#fffdf6!important;min-width:64px;font-size:clamp(26px,2.6vw,40px)!important;padding:14px 18px 16px!important}
 .hay::before{background:#fffdf6!important}
-.hopper{right:28px!important;bottom:40px!important;filter:drop-shadow(1.5px 0 0 #8a86b0) drop-shadow(-1.5px 0 0 #8a86b0) drop-shadow(0 -1.5px 0 #8a86b0) drop-shadow(2px 2px 0 var(--shade)) drop-shadow(2px 2px 0 var(--shade))!important}
+.hopper{right:28px!important;bottom:40px!important;filter:drop-shadow(2px 2px 0 #b9ab90) drop-shadow(2px 2px 0 #b9ab90)!important}
 </style>
 
 <section id="intro" class="screen-fixed" aria-label="Entrance">
@@ -757,6 +756,12 @@ function spark(x,y,text,opt={}){
 (function(){ try{ const c=document.createElement('canvas'); c.width=c.height=128; const g=c.getContext('2d'), d=g.createImageData(128,128);
   for(let i=0;i<d.data.length;i+=4){ const v=Math.random()*255; d.data[i]=d.data[i+1]=d.data[i+2]=v; d.data[i+3]=255; }
   g.putImageData(d,0,0); document.documentElement.style.setProperty('--noise',`url(${c.toDataURL()})`); }catch(e){} })();
+
+/* aged-paper pixel specks: sparse warm dots, each one a small square */
+(function(){ try{ const c=document.createElement('canvas'); c.width=c.height=64; const g=c.getContext('2d');
+  for(let i=0;i<520;i++){ const a=Math.random(); g.fillStyle=a<.6?`rgba(150,120,80,${.12+Math.random()*.18})`:a<.9?`rgba(120,100,70,${.2+Math.random()*.2})`:`rgba(255,255,255,.7)`; g.fillRect((Math.random()*64)|0,(Math.random()*64)|0,1,1); }
+  for(let y=0;y<64;y+=2){ g.fillStyle='rgba(140,115,80,.05)'; g.fillRect(0,y,64,1); }
+  document.documentElement.style.setProperty('--pixnoise',`url(${c.toDataURL()})`); }catch(e){} })();
 
 /* ---------- colour specks that flicker on the screen ---------- */
 const sp=$('#sparkle'), spx=sp.getContext('2d'), SPC=['#ffffff','#ff7ab8','#14a0ff','#c8f020','#ffe000'];
