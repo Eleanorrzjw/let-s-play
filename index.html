@@ -417,6 +417,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;paddin
   .cab{padding:10px;border-radius:24px}
 }
 @media (prefers-reduced-motion:reduce){
+  .lcd::after{animation:none}
   .hopper{animation:none}
   .hay{animation:none}
   .twister .spin,.twister .bit{animation:none}
@@ -462,6 +463,18 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;paddin
   box-shadow:-3px -3px 0 3px #a3956f,3px 3px 0 3px #fffdf6,0 0 0 6px #d2c5a4,inset 4px 4px 0 #8f0a0e,inset -2px -2px 0 rgba(255,255,255,.35)!important}
 .coin .slot::after{width:5px!important;height:18px!important;background:#2a0306!important;border-radius:2px;box-shadow:inset 1px 1px 0 #000,0 0 6px 1px rgba(255,200,0,.7)!important}
 .coin{gap:16px!important;padding-left:6px;margin-top:10px}
+.lcd{position:relative;overflow:hidden;filter:none!important;border-radius:10px!important;color:#c40008!important;
+  text-shadow:0 0 1px #ff2a1a,0 0 6px rgba(255,60,0,.55)!important;
+  background-color:#ffd800!important;
+  background-image:
+    linear-gradient(180deg,rgba(255,255,255,.35) 0%,rgba(255,255,255,.08) 38%,rgba(255,255,255,0) 40%),
+    repeating-linear-gradient(90deg,rgba(120,80,0,.10) 0 1px,transparent 1px 3px),
+    repeating-linear-gradient(0deg,rgba(120,80,0,.10) 0 1px,transparent 1px 3px),
+    radial-gradient(ellipse at 50% 50%,#fff07a 0%,#ffd800 60%,#e9be00 100%)!important;
+  /* set into the white body like the screen: stepped bevel outside, hard shadow inside, no shadow thrown outward */
+  box-shadow:-3px -3px 0 3px #a3956f,3px 3px 0 3px #fffdf6,0 0 0 5px #d2c5a4,
+    inset 3px 3px 0 #b89600,inset 6px 6px 0 rgba(184,150,0,.45),inset -2px -2px 0 rgba(255,255,255,.55),inset 0 0 18px rgba(160,100,0,.35)!important}
+.lcd::after{content:"";position:absolute;inset:0;pointer-events:none;background-image:var(--noise);background-size:90px 90px;opacity:.16;mix-blend-mode:multiply;animation:grain .45s steps(3) infinite}
 .screen{border-radius:30px / 44px!important}
 /* a bulging CRT: dark rim, brighter middle, a soft glare up and to the left */
 .screen::after{content:"";position:absolute;inset:0;z-index:8;pointer-events:none;border-radius:inherit;
@@ -472,7 +485,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;paddin
     radial-gradient(ellipse at center,rgba(0,0,0,0) 58%,rgba(5,5,30,.35) 100%)}
 .panel{padding:0 4px!important}
 .coin,.sbtn,.joy .arrows{color:var(--wall)!important}
-.lcd,.drop,.joy .base{filter:drop-shadow(3px 3px 0 #b9ab90) drop-shadow(3px 3px 0 #b9ab90)}
+.drop,.joy .base{filter:drop-shadow(3px 3px 0 #b9ab90) drop-shadow(3px 3px 0 #b9ab90)}
 .joy .knob{background:var(--yellow)!important;box-shadow:inset -5px -5px 0 #d4b000!important}
 .hay{right:18px!important;top:14px!important;filter:drop-shadow(3px 3px 0 #b9ab90) drop-shadow(3px 3px 0 #b9ab90)!important}
 .hay span{background:#fffdf6!important;min-width:64px;font-size:clamp(26px,2.6vw,40px)!important;padding:14px 18px 16px!important}
