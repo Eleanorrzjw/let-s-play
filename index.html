@@ -446,15 +446,17 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;paddin
 .cab::before,.cab::after,.ant,.cab .marq,.cab .stripes{display:none!important}
 .cabwrap{width:calc(100% - 170px)!important;margin-left:-70px!important;height:calc(100vh - 60px - env(safe-area-inset-top,0px) - env(safe-area-inset-bottom,0px))!important;margin-top:0!important}
 .bezel{filter:none;
-  /* the blue frame is set into the white machine: a cut edge in the white, red shadow falling inward from the top-left, light catching the bottom-right lip */
+  /* set into the white body: a stepped bevel cut into the white (dark on the top-left, lit on the bottom-right),
+     and the white lip casting a hard shadow into the blue frame */
   box-shadow:
-    0 0 0 3px #cbbfa4,
-    -3px -3px 0 3px #b8ab8d,
-    3px 3px 0 3px #fffaf0,
-    inset 4px 4px 0 rgba(176,10,16,.9),
-    inset 8px 8px 0 rgba(176,10,16,.6),
-    inset 12px 12px 0 rgba(176,10,16,.32),
-    inset -3px -3px 0 rgba(255,255,255,.35)}
+    -5px -5px 0 5px #a3956f,
+    5px 5px 0 5px #fffdf6,
+    0 0 0 10px #d2c5a4,
+    -2px -2px 0 12px #b9ab88,
+    2px 2px 0 12px #fffaf0,
+    inset 6px 6px 0 #0c179c,
+    inset 11px 11px 0 rgba(12,23,156,.55),
+    inset -4px -4px 0 rgba(255,255,255,.4)}
 .panel{padding:0 4px!important}
 .coin,.sbtn,.joy .arrows{color:var(--wall)!important}
 .lcd,.drop,.joy .base{filter:drop-shadow(3px 3px 0 #b9ab90) drop-shadow(3px 3px 0 #b9ab90)}
