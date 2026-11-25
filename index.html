@@ -514,7 +514,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;paddin
 <section id="intro" class="screen-fixed" aria-label="Entrance">
   <div class="lines">
     <p>Want to know me? Keep going.</p>
-    <button id="yes" type="button">[ <span class="blink">Y</span> ]</button>
+    <button id="yes" type="button">[ <span class="blink">START</span> ]</button>
     <div class="howto" aria-label="How to play">
       <b>HOW TO PLAY</b>
       <p><i>1</i><span>It&rsquo;s a claw machine. Move the <em>joystick</em>, press <em class="g">GRAB</em>, and catch one of my projects.</span></p>
@@ -1088,7 +1088,7 @@ function enter(){
 }
 $('#yes').addEventListener('click',enter);
 document.addEventListener('keydown',e=>{
-  if(state==='intro'&&(e.key==='y'||e.key==='Y'||e.key==='Enter')){ e.preventDefault(); enter(); }
+  if(state==='intro'&&(e.key==='y'||e.key==='Y'||e.key==='s'||e.key==='S'||e.key==='Enter')){ e.preventDefault(); enter(); }
   if(state==='work'&&!/^(INPUT|TEXTAREA)$/.test(e.target.tagName)){ if(e.key==='Escape') closeWork(); if(e.key==='ArrowRight') stepPage(1); if(e.key==='ArrowLeft') stepPage(-1); }
 });
 
