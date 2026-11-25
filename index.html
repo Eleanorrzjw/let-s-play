@@ -934,7 +934,17 @@ function build(){
   render();
   clawX=Math.min(Math.max(clawX||W*.55,chuteW*.5),W-36); clawLen=0;
 }
-window.addEventListener('resize',()=>{ if(state!=='intro') build(); });
+window.addEventListener('resize',()=>{
+  if(state==='intro') return;
+  const nw=scr.clientWidth, nh=scr.clientHeight;
+  if(nw===W&&Math.abs(nh-H)<H*.35){ /* only the height wobbled: keep every block where it is */
+    H=nh; wallTop=H*.66; sp.height=Math.ceil(H/4);
+    field.querySelectorAll('.chute,.chutewall').forEach(e=>e.style.height=(H-wallTop)+'px');
+    for(const it of items){ if(it.y>H-it.r) it.y=H-it.r; it.zz=false; it.calm=0; }
+    return;
+  }
+  build();
+});
 function poke1(it){ tone(330+Math.random()*300,'square',.12,.06); spark(it.x,it.y-it.r,'?',{fs:18,c:'#ffffff',dist:40}); it.vy-=380; it.vx+=(Math.random()-.5)*160; type(`>${it.word.toUpperCase()}... GRAB IT TO SEE WHICH WORK IT BELONGS TO.<`); }
 
 const nametag=$('#nametag'), NAMEGRR=["YES, THAT'S HER NAME. STOP CLICKING.","ZHANG! WITH AN EXCLAMATION MARK. OBVIOUSLY.","ELEANOR ALSO WORKS. BOTH ARE CORRECT.","DON'T POKE THE NAME."];
@@ -981,6 +991,7 @@ let hayN=0; hay.addEventListener('click',e=>{ e.stopPropagation(); audioStart();
 function physics(dt){
   for(const it of items){
     if(it.held) continue;
+    if(it.zz){ if(it.vx||it.vy){ it.zz=false; it.calm=0; } else continue; } /* asleep: a settled block stays put until something touches it */
     it.vy+=1600*dt; it.x+=it.vx*dt; it.y+=it.vy*dt; it.vx*=.992;
     if(it.y>H-it.r){ it.y=H-it.r; if(it.vy>0) it.vy*=-.18; it.vx*=.86; }
     if(it.inChute){ if(it.x<it.r){ it.x=it.r; it.vx=Math.abs(it.vx)*.3; } if(it.x>chuteW-it.r-3){ it.x=chuteW-it.r-3; it.vx=-Math.abs(it.vx)*.3; } }
@@ -989,19 +1000,28 @@ function physics(dt){
       if(it.x<it.r){ it.x=it.r; it.vx=Math.abs(it.vx)*.4; }
     }
     if(it.x>W-it.r){ it.x=W-it.r; it.vx=-Math.abs(it.vx)*.4; }
+    /* a block that only trembles in place (moved under 3px in the last ~0.4s) goes to sleep */
+    it.calm=(it.calm||0)+1;
+    if(it.calm===1){ it.ox=it.x; it.oy=it.y; }
+    else if(it.calm>96){ if(Math.hypot(it.x-it.ox,it.y-it.oy)<3){ it.zz=true; it.vx=it.vy=0; } it.calm=0; }
   }
   for(let i=0;i<items.length;i++){ const a=items[i]; if(a.held) continue;
     for(let j=i+1;j<items.length;j++){ const b=items[j]; if(b.held) continue;
+      if(a.zz&&b.zz) continue;
       const dx=b.x-a.x, dy=b.y-a.y, min=a.r+b.r; if(Math.abs(dx)>=min||Math.abs(dy)>=min) continue;
       const d=Math.hypot(dx,dy); if(d>=min||d===0) continue;
-      const nx=dx/d, ny=dy/d, ma=a.r*a.r, mb=b.r*b.r, ov=min-d, wa=mb/(ma+mb), wb=ma/(ma+mb);
+      /* a gentle touch leans on a sleeping block like a wall; a real knock wakes it */
+      const aw=a.zz?b:(b.zz?a:null);
+      if(aw&&Math.abs(aw.vx)+Math.abs(aw.vy)>140){ a.zz=b.zz=false; a.calm=b.calm=0; }
+      let nx=dx/d, ny=dy/d, ma=a.r*a.r, mb=b.r*b.r, ov=min-d, wa=mb/(ma+mb), wb=ma/(ma+mb);
+      if(a.zz){ wa=0; wb=1; ma=1e9; } else if(b.zz){ wa=1; wb=0; mb=1e9; }
       a.x-=nx*ov*wa; a.y-=ny*ov*wa; b.x+=nx*ov*wb; b.y+=ny*ov*wb;
       const vn=(b.vx-a.vx)*nx+(b.vy-a.vy)*ny;
-      if(vn<0){ const jj=-(1.15)*vn/(1/ma+1/mb); a.vx-=jj*nx/ma; a.vy-=jj*ny/ma; b.vx+=jj*nx/mb; b.vy+=jj*ny/mb; }
+      if(vn<0){ const jj=-(vn<-260?1.15:1)*vn/(1/ma+1/mb); /* hard knocks bounce, resting contacts just hold */ if(!a.zz){ a.vx-=jj*nx/ma; a.vy-=jj*ny/ma; } if(!b.zz){ b.vx+=jj*nx/mb; b.vy+=jj*ny/mb; } }
     }
   }
 }
-function render(){ for(const it of items) it.el.style.transform=`translate(${it.x-it.r}px,${it.y-it.r}px)`; }
+function render(){ for(const it of items) it.el.style.transform=`translate(${Math.round(it.x-it.r)}px,${Math.round(it.y-it.r)}px)`; }
 
 /* ---------- joystick ---------- */
 const joy=$('#joy'), stick=$('#stick');
@@ -1086,6 +1106,7 @@ function loop(time){
   stick.style.setProperty('--tilt',(tilt*28)+'deg');
   if(claw.st==='idle'&&Math.abs(tilt)>.02){ clawX=Math.min(Math.max(clawX+tilt*420*dt,chuteW*.5),W-36); joy.setAttribute('aria-valuenow',Math.round(clawX/W*100)); }
   stepClaw(dt);
+  if(claw.st!=='idle') for(const it of items){ if(it.zz){ it.zz=false; it.calm=0; } }
   for(let k=0;k<4;k++) physics(dt/4);
   render();
   clawEl.style.transform=`translateX(${clawX}px)`; cable.style.height=clawLen+'px';
