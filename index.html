@@ -373,10 +373,10 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;paddin
 .play{height:100%;aspect-ratio:16/9;max-width:92vw;display:grid;place-items:center;background:var(--wall);border:5px solid var(--paper);text-decoration:none;color:var(--paper);font-family:var(--f-system);text-align:center;font-size:clamp(18px,3vw,40px);line-height:1.3;padding:20px}
 .play small{display:block;font-family:var(--f-hand);font-size:.6em;color:var(--yellow)}
 .playwrap{gap:28px}
-.qronly .qrcard{padding:28px 28px 30px;gap:16px}
-.qronly .qrcard img{width:clamp(220px,26vw,380px)}
-.qronly .qrcard b{font-size:clamp(16px,1.6vw,24px)}
-.qronly .qrcard small{font-size:clamp(17px,1.6vw,24px)}
+.qronly .qrcard{flex:none;box-sizing:border-box;max-height:100%;padding:clamp(14px,2.4vh,28px) clamp(14px,2.4vh,28px) clamp(16px,2.6vh,30px);gap:clamp(8px,1.6vh,16px)}
+#strip .qrcard img{width:max(120px,min(380px,30vw,calc(100dvh - 330px)));height:auto;max-width:none;max-height:none;border:0}
+.qronly .qrcard b{font-size:clamp(13px,min(1.6vw,2.4vh),24px)}
+.qronly .qrcard small{font-size:clamp(14px,min(1.6vw,2.4vh),24px)}
 .wvid{height:100%;max-height:100%;width:auto;max-width:92vw;display:block;border:5px solid var(--paper);background:#000}
 .essay{height:100%;width:min(780px,86vw);overflow-y:auto;box-sizing:border-box;background:#fffdf6;border-radius:18px;padding:28px clamp(18px,3vw,40px) 40px;color:#2b2a3a;font-family:var(--f-mono);font-size:clamp(13px,1vw,15px);line-height:1.65;scrollbar-width:thin}
 .essay p{margin:0 0 12px;max-width:66ch}
@@ -527,6 +527,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;paddin
   .hay::before{display:none}
   .hopper{width:34px!important;height:42px!important;right:auto!important;left:calc(14px + 84px + 26px)!important;bottom:22px!important}
   .whead{flex-wrap:wrap;row-gap:10px}
+  #strip .qrcard img{width:min(300px,66vw)}
 }
 </style>
 
@@ -913,7 +914,7 @@ function build(){
   chuteW=W<520?Math.max(74,W*.2):Math.max(110,W*.13); wallTop=H*.66;
   const ch=document.createElement('div'); ch.className='chute'; ch.style.cssText=`width:${chuteW}px;height:${H-wallTop}px`; ch.innerHTML='<b>PRIZE &darr;</b>'; field.appendChild(ch);
   const wl=document.createElement('span'); wl.className='chutewall'; wl.style.cssText=`left:${chuteW}px;height:${H-wallTop}px`; field.appendChild(wl);
-  const pr=W<520?Math.round(Math.max(28,Math.min(42,Math.sqrt(W*H*.4/(Math.PI*16))))):Math.round(Math.max(38,Math.min(60,W*.042,H*.085))), lr=Math.round(pr*.5);
+  const pr=W<520?Math.round(Math.max(24,Math.min(36,Math.sqrt(W*H*.3/(Math.PI*16))))):Math.round(Math.max(38,Math.min(60,W*.042,H*.085))), lr=Math.round(pr*.5);
   R.forEach((r,i)=>{
     const d=pr*2, c=['#f01414','#ffffff'], el=document.createElement('span');
     el.className='item proj '+(i%2?'box':'round'); el.style.cssText=`--d:${d}px;--bg:${c[0]};--fg:${c[1]}`;
