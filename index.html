@@ -55,7 +55,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;paddin
 #intro .howto b{font-size:12px;font-weight:500;letter-spacing:.2em;color:var(--ink-soft,#6d6876)}
 #intro .howto p{font-size:clamp(13px,1.15vw,15px);line-height:1.75;color:#55505e;display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:baseline}
 #intro .howto i{font-style:normal;color:var(--ink-soft,#6d6876)}
-#intro .howto em{font-style:normal;color:var(--wall);background:#fff;border:1.5px solid var(--wall);padding:0 5px;white-space:nowrap}
+#intro .howto em{font-style:normal;font-family:var(--f-system);font-size:.88em;color:#fff;background:var(--wall);padding:2px 7px 3px;white-space:nowrap}
 #yes{font-size:clamp(15px,1.6vw,19px);color:var(--ink-soft);padding:6px 10px}
 #yes:hover{color:var(--ink)}
 .blink{animation:blink 1.1s steps(1) infinite}
@@ -508,6 +508,26 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;paddin
 .pxcur{position:absolute;left:0;top:0;z-index:7;width:20px;height:34px;pointer-events:none;image-rendering:pixelated;display:none;will-change:transform}
 .screen.hover .pxcur{display:block}
 #work input,#work textarea{cursor:text!important}
+/* phones held upright: same machine, rearranged so nothing gets squeezed (desktop and landscape untouched) */
+@media (max-width:700px) and (orientation:portrait){
+  .cabwrap{width:calc(100% - 24px)!important;margin-left:0!important;margin-top:0!important;height:calc(100dvh - 24px - env(safe-area-inset-top,0px) - env(safe-area-inset-bottom,0px))!important}
+  .cab{gap:12px!important}
+  .bezel .brand{font-size:8px;letter-spacing:.12em}
+  .panel{grid-template-columns:auto 1fr!important;grid-template-areas:"mid mid" "joy btns";row-gap:14px!important;column-gap:18px!important;padding:0 2px 6px!important}
+  .panel .mid{grid-area:mid}
+  .panel .joy{grid-area:joy;width:84px;margin-left:14px}
+  .panel .btns{grid-area:btns;justify-content:flex-end;gap:18px}
+  .lcd{grid-column:auto!important;grid-row:auto!important;margin-top:0!important;font-size:11px!important;min-height:2.9em!important}
+  .coin{margin-top:2px!important;font-size:9px;gap:12px!important}
+  .coin .slot{width:26px!important;height:26px!important}
+  .grill{display:none}
+  .drop{width:84px;font-size:15px}
+  .hay{right:2px!important;top:2px!important}
+  .hay span{font-size:20px!important;min-width:0!important;padding:6px 10px 8px!important}
+  .hay::before{display:none}
+  .hopper{width:34px!important;height:42px!important;right:auto!important;left:calc(14px + 84px + 26px)!important;bottom:22px!important}
+  .whead{flex-wrap:wrap;row-gap:10px}
+}
 </style>
 
 <section id="intro" class="screen-fixed" aria-label="Entrance">
@@ -890,10 +910,10 @@ function spawnSpot(it){ it.x=chuteW+it.r+10+Math.random()*(W-chuteW-2*it.r-20); 
 function build(){
   W=scr.clientWidth; H=scr.clientHeight; sp.width=Math.ceil(W/4); sp.height=Math.ceil(H/4);
   field.innerHTML=''; items=[];
-  chuteW=Math.max(110,W*.13); wallTop=H*.66;
+  chuteW=W<520?Math.max(74,W*.2):Math.max(110,W*.13); wallTop=H*.66;
   const ch=document.createElement('div'); ch.className='chute'; ch.style.cssText=`width:${chuteW}px;height:${H-wallTop}px`; ch.innerHTML='<b>PRIZE &darr;</b>'; field.appendChild(ch);
   const wl=document.createElement('span'); wl.className='chutewall'; wl.style.cssText=`left:${chuteW}px;height:${H-wallTop}px`; field.appendChild(wl);
-  const pr=Math.round(Math.max(38,Math.min(60,W*.042,H*.085))), lr=Math.round(pr*.5);
+  const pr=W<520?Math.round(Math.max(28,Math.min(42,Math.sqrt(W*H*.4/(Math.PI*16))))):Math.round(Math.max(38,Math.min(60,W*.042,H*.085))), lr=Math.round(pr*.5);
   R.forEach((r,i)=>{
     const d=pr*2, c=['#f01414','#ffffff'], el=document.createElement('span');
     el.className='item proj '+(i%2?'box':'round'); el.style.cssText=`--d:${d}px;--bg:${c[0]};--fg:${c[1]}`;
